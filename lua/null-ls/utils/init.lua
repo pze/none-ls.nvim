@@ -211,6 +211,20 @@ M.handle_function_opt = function(opt, ...)
     return vim.deepcopy(opt)
 end
 
+--- gets git root
+---@return string
+M.get_git_root = function()
+    local result = vim.system({
+        "git",
+        "rev-parse",
+        "--show-toplevel",
+    }):wait()
+
+    if result.code == 0 then
+        return vim.trim(result.stdout)
+    end
+end
+
 --- gets root using best available method
 ---@return string root
 M.get_root = function()
